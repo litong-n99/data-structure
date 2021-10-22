@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node ./stack/BinaryToDecimal.ts"
+    "test": "ts-node ./stack/RPN.ts"
   },
   "author": "",
   "license": "ISC",

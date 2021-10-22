@@ -1,6 +1,9 @@
 export default class Stack<T> {
     private stack: T[] = [];
     private len = 0;
+    public last() {
+        return this.stack[this.len - 1];
+    }
     public getLen() {
         return this.len;
     }
@@ -15,5 +18,9 @@ export default class Stack<T> {
     public clear() {
         this.len = 0;
         this.stack = [];
+    }
+
+    public printStack() {
+        console.log(this.stack);
     }
 }
