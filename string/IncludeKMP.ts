@@ -1,60 +1,38 @@
 function getPartialMatchTable(str: string) {
-    const strArray = str.split('');
-    const table: [string, number][] = [];
-    for (let i = 0; i < strArray.length; i++) {
-        const elements = strArray.slice(0, i + 1);
-        let prefixStr = '';
-        let suffixStr = '';
-        let maxLen = 0;
-        for (let j = 0; j < elements.length - 1; j++) {
-            const prefixElement = elements[j];
-            prefixStr = prefixStr + prefixElement;
-
-            const suffixElement = elements[elements.length - 1 - j];
-            suffixStr = suffixElement + suffixStr;
-            
-            if (prefixStr === suffixStr) {
-                
-                maxLen = j + 1;
+    const next = [-1];
+    let [j, k] = [0, -1]
+    while (j < str.length - 1) {
+        if (k === -1 || str[j] === str[k]) {
+            if (str[++j] === str[++k]) {
+                next[j] = next[k]
+            } else {
+                next[j] = k
             }
+        } else {
+            k = next[k]
         }
-
-        table.push([strArray[i], maxLen]);
     }
-    return table;
+    return next;
 }
 
 function isInclude(str: string, findStr: string) {
     if (findStr === '') return 0;
 
-    const strArray = str.split('');
-    const findStrArray = getPartialMatchTable(findStr);
-
-    let i = 0
-    let j = 0;
-    let lastFindEleNum = 0;
-    for (;i < strArray.length;) {
-        const fElement = findStrArray[j];
-        const tempElement = strArray[i];
-        if (tempElement !== fElement[0]) {
-            const moveNum = j - lastFindEleNum;
-            if (moveNum === 0) {
-                i++;
-            } else {
-                j = j - moveNum;
-            }
-            lastFindEleNum = findStrArray[j-1]?.[1] ?? 0;
+    let [i, j] = [0, 0];
+    const partialTable = getPartialMatchTable(findStr);
+    while (i < str.length && j < findStr.length) {
+        if (j === -1 || str[i] === findStr[j]) {
+            i++
+            j++
         } else {
-            if (j === findStrArray.length - 1) {
-                return i - findStrArray.length + 1;
-            }
-            lastFindEleNum = fElement[1];
-            i++;
-            j++;
+            j = partialTable[j]
         }
     }
-    return -1;
+    if (j === findStr.length) {
+        return i - j
+    } else {
+        return -1
+    }
 }
 
-// console.log(isInclude('adcadcaddcadde', 'adcadde'));
 console.log(isInclude('aabaaabaab', 'aabaab'));
