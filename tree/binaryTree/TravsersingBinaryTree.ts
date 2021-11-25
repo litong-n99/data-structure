@@ -65,3 +65,27 @@ function postOrderRecursion<T>(tree: BinaryTreeNode<T> | undefined, list: T[]) {
 orderList = [];
 postOrderRecursion(tree, orderList);
 console.log('postOrder', orderList.join(' '));
+
+//============================================
+function levelOrder<T>(tree: BinaryTreeNode<T> | undefined, list: T[]) {
+    if (!tree) return;
+    let subTrees: BinaryTreeNode<T>[] = [tree];
+    while (subTrees.length > 0) {
+        const newSubTrees: BinaryTreeNode<T>[] = [];
+        subTrees.forEach(itemTree => {
+            list.push(itemTree.data);
+            if (itemTree.lChild) {
+                newSubTrees.push(itemTree.lChild);
+            }
+            
+            if (itemTree.rChild) {
+                newSubTrees.push(itemTree.rChild);
+            }
+        })
+        subTrees = newSubTrees;
+    }
+}
+
+orderList = [];
+levelOrder(tree, orderList);
+console.log('levelOrder', orderList.join(' '));
