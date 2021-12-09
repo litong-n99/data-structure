@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node ./tree/binaryTree/ThreadingBinaryTree.ts"
+    "test": "ts-node ./tree/binaryTree/HuffmanEncode.ts"
   },
   "author": "",
   "license": "ISC",
